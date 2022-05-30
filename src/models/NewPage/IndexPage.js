@@ -10,11 +10,14 @@ import {
   deleteCourseData,
   searchUser,
   getUser,
+  EditCourseData,
 } from "../../services/CopyCourseModule";
 
 import state from "../../config/state.json";
 
 import Pagination from "react-js-pagination";
+import { Navigate } from "react-router";
+import axios from "axios";
 const IndexPage = () => {
   console.log(state, "helloo");
 
@@ -26,6 +29,7 @@ const IndexPage = () => {
   });
 
   const [show, setShow] = useState(false);
+  const [edit, setEdit] = useState(false);
   const [errorData, setErrorData] = useState();
   const [pageLimit, setPageLimit] = useState(2);
   const [activePage, setActivePage] = useState(1);
@@ -33,18 +37,23 @@ const IndexPage = () => {
   const [search, setSearch] = useState();
   const [user, setUser] = useState([]);
   const [allGetData, setAllGetData] = useState([]);
+  const [file, setFile] = useState();
   useEffect(() => {
     paginationFunction();
   }, [activePage]);
 
   const [allData, setAllData] = useState({});
   const handleClose = () => setShow(false);
+  const handleShow = () => {
+    setShow(true);
+  };
 
   const onChangeFunction = (e) => {
     setAllData({ ...allData, [e.target.name]: e.target.value });
   };
   const addFunction = () => {
     setShow(true);
+
     setAllData({});
   };
   const onSubmitFunction = async (e) => {
@@ -112,6 +121,29 @@ const IndexPage = () => {
     setCountPage(res.data.countPage);
   };
 
+  const updateFunction = (val) => {
+    console.log(val, "ppppppppp");
+    setEdit(true);
+    handleShow();
+    setAllData(val);
+  };
+
+  const handleEditFunction = async (e) => {
+    e.preventDefault();
+    console.log(allData._id, "kkkk");
+    console.log(allData, "rrrr");
+    const res = await EditCourseData(allData._id, allData);
+    console.log(res.data, "ppopop");
+    handleClose();
+    //setShow(false);
+    getAllData();
+  };
+  // const handleFile = () => {
+  //   const formData = new FormData();
+  //   formData.append("File", selectedFile);
+  //   const res = await addNewCourse(formData);
+  // };
+
   return (
     <div>
       <Layout>
@@ -132,6 +164,8 @@ const IndexPage = () => {
                 />
                 <i className="fa fa-search" aria-hidden="true"></i>
               </div>
+
+              <input type="file" onChange={handleFile} />
               <div className="questionTitlebtn">
                 <AddModulePage
                   onChangeFunction={onChangeFunction}
@@ -143,6 +177,8 @@ const IndexPage = () => {
                   show={show}
                   errorData={errorData}
                   user={user}
+                  edit={edit}
+                  handleEditFunction={handleEditFunction}
                 />
               </div>
             </div>
@@ -172,10 +208,13 @@ const IndexPage = () => {
                           >
                             Delete
                           </Button>
-                          {/* <Button variant="primary" onClick={editFunction}>
-                          Edit
-                        </Button> */}
-                          {/* <Button style={{ color: "green" }} onClick={editFunction}>Edit</Button> */}
+                          <Button
+                            type="submit"
+                            style={{ color: "green" }}
+                            onClick={() => updateFunction(val)}
+                          >
+                            Edit
+                          </Button>
                         </td>
                       </tr>
                     </tbody>

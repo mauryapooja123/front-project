@@ -11,6 +11,8 @@ const AddModulePage = ({
   addFunction,
   show,
   user,
+  edit,
+  handleEditFunction,
 }) => {
   const { state, title, orderNo } = allData;
 
@@ -22,7 +24,8 @@ const AddModulePage = ({
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          {/* <Modal.Title >Course Add </Modal.Title> */}
+          <Modal.Title>{edit ? "Edit User" : "Add User"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -83,7 +86,10 @@ const AddModulePage = ({
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={onSubmitFunction}>
+          <Button
+            variant="secondary"
+            onClick={edit ? handleEditFunction : onSubmitFunction}
+          >
             Add Data
           </Button>
           <Button variant="secondary" onClick={handleClose}>

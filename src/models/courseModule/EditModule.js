@@ -107,7 +107,6 @@ const EditModule = (props) => {
           </Modal.Header>
           <Modal.Body>
             <div className="popup-form-box">
-              {/* */}
               <label>Course State</label>
               <select
                 className="input1"

@@ -80,6 +80,7 @@ const AddImageModal = () => {
       </Modal>
     </>
   );
+  afterOpenModal;
 };
 
 export default AddImageModal;

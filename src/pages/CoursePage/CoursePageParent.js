@@ -100,7 +100,6 @@ const CoursePageParent = () => {
   };
   const handleUpdate = async (e) => {
     e.preventDefault();
-
     setEdit(true);
     console.log(user._id, "fffffffffffffff");
     // if (isValid()) {
@@ -144,6 +143,7 @@ const CoursePageParent = () => {
     setUserData(res.data.data);
     setTotalCount(res.data.totalCount);
   };
+
   const handlePageChange = (pageNumber) => {
     console.log(pageNumber, "p");
     setActivePage(pageNumber);
